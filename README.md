@@ -1,9 +1,9 @@
-# Torc Take Home Assesment Solution 
+# Torc Take Home Assessment Solution 
 
 ![image](https://github.com/gvillena/torc/assets/12707294/bfa69ecc-667c-4498-b1bb-a175502cc0ef)
 
 ## Description
-This project sets up a Kubernetes cluster to host a Book Library application consisting of various microservices, including a database, API backend, a messaging hub, and a single-page application (SPA). Each microservice is deployed as a separate deployment within the Kubernetes cluster and exposed through corresponding services. This project represents the solution for a take-home assessment as part as the selection process for a Senior Software Engineer position at Torc. 
+This project sets up a Kubernetes cluster to host a Book Library application consisting of various microservices, including a database, API backend, a messaging hub, and a single-page application (SPA). Each microservice is deployed as a separate deployment within the Kubernetes cluster and exposed through corresponding services.
 
 ## Components
 1. **sqldata (StatefulSet):**
