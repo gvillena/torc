@@ -1,0 +1,16 @@
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\bin\Debug\net8.0\EventBus.AzureServiceBus.deps.json
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\bin\Debug\net8.0\EventBus.AzureServiceBus.dll
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\bin\Debug\net8.0\EventBus.AzureServiceBus.pdb
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\bin\Debug\net8.0\EventBus.dll
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\bin\Debug\net8.0\EventBus.pdb
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\obj\Debug\net8.0\EventBus.AzureServiceBus.csproj.AssemblyReference.cache
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\obj\Debug\net8.0\EventBus.AzureServiceBus.GeneratedMSBuildEditorConfig.editorconfig
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\obj\Debug\net8.0\EventBus.AzureServiceBus.AssemblyInfoInputs.cache
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\obj\Debug\net8.0\EventBus.AzureServiceBus.AssemblyInfo.cs
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\obj\Debug\net8.0\EventBus.AzureServiceBus.csproj.CoreCompileInputs.cache
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\obj\Debug\net8.0\EventBus.AzureServiceBus.sourcelink.json
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\obj\Debug\net8.0\EventBus.AzureServiceBus.csproj.CopyComplete
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\obj\Debug\net8.0\EventBus.AzureServiceBus.dll
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\obj\Debug\net8.0\refint\EventBus.AzureServiceBus.dll
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\obj\Debug\net8.0\EventBus.AzureServiceBus.pdb
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus.AzureServiceBus\obj\Debug\net8.0\ref\EventBus.AzureServiceBus.dll

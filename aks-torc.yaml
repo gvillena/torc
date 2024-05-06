@@ -1,0 +1,176 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sqldata
+spec:
+  serviceName: sqldata
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sqldata
+  template:
+    metadata:
+      labels:
+        app: sqldata
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+        - name: sqldata
+          image: mcr.microsoft.com/mssql/server:latest
+          ports:
+            - containerPort: 1433
+              name: sqldata
+          env:
+            - name: SA_PASSWORD
+              value: "Pass@word"
+            - name: ACCEPT_EULA
+              value: "Y"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sqldata
+spec:
+  ports:
+    - port: 1433
+  selector:
+    app: sqldata
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booklibrary-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: booklibrary-api
+  template:
+    metadata:
+      labels:
+        app: booklibrary-api
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+        - name: booklibrary-api
+          image: torcacr.azurecr.io/aks-torc/booklibrary-api:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: ConnectionStrings__BookLibraryDB
+              value: "Server=sqldata;Database=BookLibrary;User Id=sa;Password=Pass@word;Encrypt=False;TrustServerCertificate=true"
+            - name: AzureServiceBus__TorcBookLibrary__NamespaceName
+              value: "torc-booklibrary"
+            - name: AzureServiceBus__TorcBookLibrary__Events__BookAdded__TopicName
+              value: "book-added-topic"
+            - name: AzureServiceBus__TorcBookLibrary__Events__BookAdded__SubscriptionName
+              value: "book-added-subscription"
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "3000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: booklibrary-api
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+  selector:
+    app: booklibrary-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: booklibrary-api-swagger
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 3000
+  selector:
+    app: booklibrary-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booklibrary-hub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: booklibrary-hub
+  template:
+    metadata:
+      labels:
+        app: booklibrary-hub
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+        - name: booklibrary-hub
+          image: torcacr.azurecr.io/aks-torc/booklibrary-hub:latest
+          ports:
+            - containerPort: 3002
+          env:
+            - name: AzureServiceBus__TorcBookLibrary__NamespaceName
+              value: "torc-booklibrary"
+            - name: AzureServiceBus__TorcBookLibrary__Events__BookAdded__TopicName
+              value: "book-added-topic"
+            - name: AzureServiceBus__TorcBookLibrary__Events__BookAdded__SubscriptionName
+              value: "book-added-subscription"
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "3002"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: booklibrary-hub
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 3002
+      targetPort: 3002
+  selector:
+    app: booklibrary-hub
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booklibrary-spa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: booklibrary-spa
+  template:
+    metadata:
+      labels:
+        app: booklibrary-spa
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+        - name: booklibrary-spa
+          image: torcacr.azurecr.io/aks-torc/booklibrary-spa:latest4
+          ports:
+            - containerPort: 8080
+              name: booklibrary-spa
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: booklibrary-spa
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: booklibrary-spa

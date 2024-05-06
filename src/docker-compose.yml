@@ -1,0 +1,71 @@
+version: '3.4'
+
+services:
+  booklibrary-api:
+    image: ${DOCKER_REGISTRY-}booklibrary-api
+    build:
+      context: .
+      dockerfile: Services/BookLibrary/BookLibrary.API/Dockerfile
+    container_name: 'booklibrary-api'
+    restart: always
+    environment:    
+      - ConnectionStrings__BookLibraryDB=Server=sqldata;Database=BookLibrary;User Id=sa;Password=Pass@word;Encrypt=False;TrustServerCertificate=true
+      - AzureServiceBus__TorcBookLibrary__NamespaceName=torc-booklibrary
+      - AzureServiceBus__TorcBookLibrary__Events__BookAdded__TopicName=book-added-topic
+      - AzureServiceBus__TorcBookLibrary__Events__BookAdded__SubscriptionName=book-added-subscription
+      - ASPNETCORE_HTTP_PORTS=3000    
+    ports:
+      - "3000:3000"
+    depends_on:    
+      - sqldata
+    networks:
+      - backend_services
+
+  booklibrary-hub:
+    image: ${DOCKER_REGISTRY-}booklibrary-hub
+    build:
+      context: .
+      dockerfile: Services/BookLibrary/BookLibrary.SignalRHub/Dockerfile    
+    container_name: 'booklibrary-hub'
+    restart: always
+    environment:          
+      - AzureServiceBus__TorcBookLibrary__NamespaceName=torc-booklibrary
+      - AzureServiceBus__TorcBookLibrary__Events__BookAdded__TopicName=book-added-topic
+      - AzureServiceBus__TorcBookLibrary__Events__BookAdded__SubscriptionName=book-added-subscription
+      - ASPNETCORE_HTTP_PORTS=3002    
+    ports:
+      - "3002:3002"
+    networks:
+      - backend_services
+ 
+  booklibrary-spa:
+    image: ${DOCKER_REGISTRY-}booklibrary-spa
+    build:
+      context: .
+      dockerfile: WebApps/booklibrary-spa/Dockerfile    
+    container_name: 'booklibrary-spa'
+    restart: always
+    environment:          
+      - VITE_BOOKLIBRARY_API_URL=http://booklibrary-spa:3000/
+      - VITE_BOOKLIBRARY_HUB_URL=http://booklibrary-hub:3002/
+    ports:
+      - "80:8080"
+    depends_on:    
+      - booklibrary-api
+      - booklibrary-hub
+    networks:
+      - backend_services
+
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
+    networks:
+      - backend_services
+
+networks:
+  backend_services:
+    driver: bridge

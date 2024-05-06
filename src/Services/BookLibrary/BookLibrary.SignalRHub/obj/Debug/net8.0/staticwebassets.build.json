@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "5Kc5Kt4TKRmw+nsPCWrkovrqch6OjGUZQWVjnaZaV48=",
+  "Source": "BookLibrary.SignalRHub",
+  "BasePath": "_content/BookLibrary.SignalRHub",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

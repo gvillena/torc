@@ -1,0 +1,219 @@
+name: dockercompose292931961859118374
+services:
+  booklibrary-api:
+    build:
+      context: C:\TreeHouse\torc\Torc\src
+      dockerfile: Services/BookLibrary/BookLibrary.API/Dockerfile
+      args:
+        BUILD_CONFIGURATION: Release
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: BookLibrary.API
+    container_name: booklibrary-api
+    depends_on:
+      sqldata:
+        condition: service_started
+        required: true
+    entrypoint:
+      - tail
+      - -f
+      - /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "3000"
+      ASPNETCORE_HTTPS_PORTS: "3001"
+      AzureServiceBus__TorcBookLibrary__Events__BookAdded__SubscriptionName: book-added-subscription
+      AzureServiceBus__TorcBookLibrary__Events__BookAdded__TopicName: book-added-topic
+      AzureServiceBus__TorcBookLibrary__NamespaceName: torc-booklibrary
+      ConnectionStrings__BookLibraryDB: Server=sqldata;Database=BookLibrary;User Id=sa;Password=Pass@word;Encrypt=False;TrustServerCertificate=true
+    image: booklibrary-api
+    labels:
+      com.microsoft.visual-studio.project-name: BookLibrary.API
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /.nuget/packages  "/app/BookLibrary.API.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      backend_services: null
+    ports:
+      - mode: ingress
+        target: 3000
+        published: "3000"
+        protocol: tcp
+      - mode: ingress
+        target: 3001
+        published: "3001"
+        protocol: tcp
+    restart: always
+    tty: true
+    volumes:
+      - type: bind
+        source: C:\Users\g_vil\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\g_vil\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\g_vil\vsdbg\vs2017u5
+        target: /remote_debugger
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\g_vil\AppData\Roaming/ASP.NET/Https
+        target: /root/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\g_vil\AppData\Roaming/Microsoft/UserSecrets
+        target: /root/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Sdks\Microsoft.Docker.Sdk\tools\TokenService.Proxy\linux-x64\net6.0
+        target: /TokenService.Proxy
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Sdks\Microsoft.Docker.Sdk\tools\HotReloadProxy\linux-x64\net6.0
+        target: /HotReloadProxy
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\IDE\CommonExtensions\Microsoft\HotReload
+        target: /HotReloadAgent
+        read_only: true
+        bind:
+          create_host_path: true
+  booklibrary-hub:
+    build:
+      context: C:\TreeHouse\torc\Torc\src
+      dockerfile: Services/BookLibrary/BookLibrary.SignalRHub/Dockerfile
+      args:
+        BUILD_CONFIGURATION: Release
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: BookLibrary.SignalRHub
+    container_name: booklibrary-hub
+    entrypoint:
+      - tail
+      - -f
+      - /dev/null
+    environment:
+      ASPNETCORE_HTTP_PORTS: "3002"
+      AzureServiceBus__TorcBookLibrary__Events__BookAdded__SubscriptionName: book-added-subscription
+      AzureServiceBus__TorcBookLibrary__Events__BookAdded__TopicName: book-added-topic
+      AzureServiceBus__TorcBookLibrary__NamespaceName: torc-booklibrary
+    image: booklibrary-hub
+    labels:
+      com.microsoft.visual-studio.project-name: BookLibrary.SignalRHub
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /.nuget/packages  "/app/BookLibrary.SignalRHub.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      backend_services: null
+    ports:
+      - mode: ingress
+        target: 3002
+        published: "3002"
+        protocol: tcp
+    restart: always
+    tty: true
+    volumes:
+      - type: bind
+        source: C:\Users\g_vil\vsdbg\vs2017u5
+        target: /remote_debugger
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\g_vil\AppData\Roaming/ASP.NET/Https
+        target: /root/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\g_vil\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\g_vil\AppData\Roaming/Microsoft/UserSecrets
+        target: /root/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\g_vil\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Sdks\Microsoft.Docker.Sdk\tools\TokenService.Proxy\linux-x64\net6.0
+        target: /TokenService.Proxy
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Sdks\Microsoft.Docker.Sdk\tools\HotReloadProxy\linux-x64\net6.0
+        target: /HotReloadProxy
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\IDE\CommonExtensions\Microsoft\HotReload
+        target: /HotReloadAgent
+        read_only: true
+        bind:
+          create_host_path: true
+  booklibrary-spa:
+    build:
+      context: C:\TreeHouse\torc\Torc\src
+      dockerfile: WebApps/booklibrary-spa/Dockerfile
+    container_name: booklibrary-spa
+    depends_on:
+      booklibrary-api:
+        condition: service_started
+        required: true
+      booklibrary-hub:
+        condition: service_started
+        required: true
+    environment:
+      VITE_BOOKLIBRARY_API_URL: http://booklibrary-spa:3000/
+      VITE_BOOKLIBRARY_HUB_URL: http://booklibrary-hub:3002/
+    image: booklibrary-spa
+    networks:
+      backend_services: null
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "80"
+        protocol: tcp
+    restart: always
+  sqldata:
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: Pass@word
+    image: mcr.microsoft.com/mssql/server:latest
+    networks:
+      backend_services: null
+    ports:
+      - mode: ingress
+        target: 1433
+        published: "1433"
+        protocol: tcp
+networks:
+  backend_services:
+    name: dockercompose292931961859118374_backend_services
+    driver: bridge

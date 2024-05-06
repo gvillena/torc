@@ -1,0 +1,106 @@
+name: dockercompose292931961859118374
+services:
+  booklibrary-spa:
+    build:
+      context: C:\TreeHouse\torc\Torc\src
+      dockerfile: WebApps/booklibrary-spa/Dockerfile
+    container_name: booklibrary-spa
+    depends_on:
+      booklibrary.api:
+        condition: service_started
+        required: true
+      booklibrary.signalrhub:
+        condition: service_started
+        required: true
+    environment:
+      VITE_BOOKLIBRARY_API_URL: http://booklibrary-spa:3000/
+      VITE_BOOKLIBRARY_HUB_URL: http://booklibrary-hub:3002/
+    image: booklibrary-spa
+    networks:
+      backend_services: null
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "8080"
+        protocol: tcp
+    restart: always
+  booklibrary.api:
+    build:
+      context: C:\TreeHouse\torc\Torc\src
+      dockerfile: Services/BookLibrary/BookLibrary.API/Dockerfile
+    container_name: booklibrary-api
+    depends_on:
+      sqldata:
+        condition: service_started
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "3000"
+      ASPNETCORE_HTTPS_PORTS: "3001"
+      AzureServiceBus__TorcBookLibrary__Events__BookAdded__SubscriptionName: book-added-subscription
+      AzureServiceBus__TorcBookLibrary__Events__BookAdded__TopicName: book-added-topic
+      AzureServiceBus__TorcBookLibrary__NamespaceName: torc-booklibrary
+      ConnectionStrings__BookLibraryDB: Server=sqldata;Database=BookLibrary;User Id=sa;Password=Pass@word;Encrypt=False;TrustServerCertificate=true
+    image: booklibrary-api
+    networks:
+      backend_services: null
+    ports:
+      - mode: ingress
+        target: 3000
+        published: "3000"
+        protocol: tcp
+      - mode: ingress
+        target: 3001
+        published: "3001"
+        protocol: tcp
+    restart: always
+    volumes:
+      - type: bind
+        source: C:\Users\g_vil\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\g_vil\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+  booklibrary.signalrhub:
+    build:
+      context: C:\TreeHouse\torc\Torc\src
+      dockerfile: Services/BookLibrary/BookLibrary.SignalRHub/Dockerfile
+    container_name: booklibrary-hub
+    environment:
+      ASPNETCORE_HTTP_PORTS: "3002"
+      AzureServiceBus__TorcBookLibrary__Events__BookAdded__SubscriptionName: book-added-subscription
+      AzureServiceBus__TorcBookLibrary__Events__BookAdded__TopicName: book-added-topic
+      AzureServiceBus__TorcBookLibrary__NamespaceName: torc-booklibrary
+    image: booklibrary-hub
+    networks:
+      backend_services: null
+    ports:
+      - mode: ingress
+        target: 3002
+        published: "3002"
+        protocol: tcp
+    restart: always
+  sqldata:
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: Pass@word
+    image: mcr.microsoft.com/mssql/server:latest
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 1433
+        published: "5433"
+        protocol: tcp
+networks:
+  backend_services:
+    name: dockercompose292931961859118374_backend_services
+    driver: bridge
+  default:
+    name: dockercompose292931961859118374_default

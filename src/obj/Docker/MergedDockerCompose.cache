@@ -1,0 +1,53 @@
+name: dockercompose292931961859118374
+services:
+  booklibrary.api:
+    build:
+      context: C:\TreeHouse\torc\Torc\src
+      dockerfile: Services/BookLibrary/BookLibrary.API/Dockerfile
+    depends_on:
+      sqldata:
+        condition: service_started
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ASPNETCORE_HTTPS_PORTS: "8081"
+      ConnectionString: Server=sqldata;Port=1433;Database=BookLibrary;User Id=sa;Password=Pass@word
+    image: booklibraryapi
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8080
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\g_vil\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\g_vil\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+  sqldata:
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: Pass@word
+    image: mcr.microsoft.com/mssql/server:latest
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 1433
+        published: "5433"
+        protocol: tcp
+networks:
+  default:
+    name: dockercompose292931961859118374_default

@@ -1,0 +1,6 @@
+@BookLibrary.SignalRHub_HostAddress = http://localhost:5220
+
+GET {{BookLibrary.SignalRHub_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

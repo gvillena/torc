@@ -1,0 +1,12 @@
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus\bin\Debug\net8.0\EventBus.deps.json
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus\bin\Debug\net8.0\EventBus.dll
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus\bin\Debug\net8.0\EventBus.pdb
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus\obj\Debug\net8.0\EventBus.GeneratedMSBuildEditorConfig.editorconfig
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus\obj\Debug\net8.0\EventBus.AssemblyInfoInputs.cache
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus\obj\Debug\net8.0\EventBus.AssemblyInfo.cs
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus\obj\Debug\net8.0\EventBus.csproj.CoreCompileInputs.cache
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus\obj\Debug\net8.0\EventBus.sourcelink.json
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus\obj\Debug\net8.0\EventBus.dll
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus\obj\Debug\net8.0\refint\EventBus.dll
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus\obj\Debug\net8.0\EventBus.pdb
+C:\TreeHouse\torc\Torc\src\BuildingBlocks\EventBus\EventBus\obj\Debug\net8.0\ref\EventBus.dll

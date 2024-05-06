@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Torc.Services.BookLibrary.Domain/1.0.0": {
+        "runtime": {
+          "Torc.Services.BookLibrary.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Torc.Services.BookLibrary.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
